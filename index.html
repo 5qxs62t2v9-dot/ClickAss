@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, shrink-to-fit=no">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -17,33 +17,33 @@
             touch-action: manipulation;
         }
 
+        /* Полный экран без прокрутки */
         html, body {
             width: 100%;
             height: 100%;
-            margin: 0;
-            padding: 0;
             overflow: hidden;
             position: fixed;
             top: 0;
             left: 0;
+            margin: 0;
+            padding: 0;
         }
 
+        /* Адаптивные темы */
         :root {
             --bg-gradient-light: linear-gradient(145deg, #ffe8ce 0%, #ffce9e 100%);
-            --card-light: rgba(250, 240, 225, 0.85);
+            --card-light: rgba(250, 240, 225, 0.88);
             --text-light: #2e241a;
             --btn-light: #f39c12;
             --btn-hover-light: #e67e22;
-            --glow-light: 0 0 12px rgba(255, 160, 80, 0.8);
         }
 
         :root {
             --bg-gradient-dark: linear-gradient(135deg, #1a1f2a 0%, #0f1118 100%);
-            --card-dark: rgba(25, 30, 38, 0.88);
+            --card-dark: rgba(25, 30, 38, 0.92);
             --text-dark: #f0e6d2;
             --btn-dark: #c96f1e;
             --btn-hover-dark: #b55d12;
-            --glow-dark: 0 0 14px #e67e22;
         }
 
         body {
@@ -54,8 +54,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100%;
             width: 100%;
+            height: 100%;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -77,14 +77,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 16px;
+            padding: 12px;
         }
 
         .card {
             width: 100%;
             max-width: 620px;
+            height: auto;
+            max-height: 96vh;
             border-radius: 64px;
-            padding: 20px 20px 30px;
+            padding: 18px 18px 25px;
             text-align: center;
             backdrop-filter: blur(12px);
             box-shadow: 0 25px 45px rgba(0,0,0,0.3);
@@ -92,27 +94,42 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
+            overflow-y: auto;
+        }
+        .card::-webkit-scrollbar {
+            width: 4px;
         }
 
         .date-area {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             background: rgba(0,0,0,0.2);
             display: inline-block;
             width: fit-content;
             margin: 0 auto 5px;
-            padding: 5px 18px;
+            padding: 4px 16px;
             border-radius: 60px;
             font-weight: 600;
             backdrop-filter: blur(4px);
         }
 
+        /* Заголовок — уменьшенный шрифт, чтобы оба эмодзи были на одной строке */
         .score-title {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: 700;
-            letter-spacing: 1px;
+            letter-spacing: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: nowrap;
+            white-space: nowrap;
         }
+        @media (max-width: 480px) {
+            .score-title { font-size: 1rem; white-space: normal; gap: 4px; }
+        }
+
         .score-value {
-            font-size: 4rem;
+            font-size: 3.8rem;
             font-weight: 800;
             background: linear-gradient(135deg, #f5b042, #e67e22);
             background-clip: text;
@@ -121,12 +138,13 @@
         }
 
         .peach {
-            font-size: 210px;
+            font-size: 190px;
             cursor: pointer;
             transition: transform 0.06s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             display: inline-block;
-            margin: 0;
+            margin: 5px 0;
             filter: drop-shadow(0 18px 22px rgba(0,0,0,0.3));
+            pointer-events: auto;  /* гарантия кликабельности */
         }
         .peach:active { transform: scale(0.92); }
         .peach-glitter { animation: glitterPulse 0.3s ease-out; }
@@ -139,9 +157,8 @@
         .stats-panel {
             background: rgba(0,0,0,0.2);
             border-radius: 48px;
-            padding: 12px 18px;
+            padding: 10px 16px;
             margin: 6px 0;
-            transition: all 0.2s;
         }
         .stats-header {
             display: flex;
@@ -149,30 +166,29 @@
             align-items: center;
             cursor: pointer;
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             padding: 4px 8px;
         }
         .stats-list {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            margin-top: 12px;
+            gap: 6px;
+            margin-top: 10px;
         }
         .stat-row {
             display: flex;
             justify-content: space-between;
             background: rgba(0,0,0,0.15);
             border-radius: 60px;
-            padding: 6px 16px;
-            font-size: 0.85rem;
+            padding: 5px 16px;
+            font-size: 0.8rem;
             font-weight: 600;
         }
-        .hidden-stats .stats-list { display: none; }
 
         .shop-btn {
             border: none;
-            padding: 14px 28px;
-            font-size: 1.2rem;
+            padding: 12px 24px;
+            font-size: 1.1rem;
             font-weight: bold;
             border-radius: 60px;
             color: white;
@@ -233,12 +249,11 @@
         }
         .upgrade-card.pulse-glow {
             box-shadow: 0 0 0 2px gold, 0 0 0 4px #ffaa33;
-            transition: 0.08s;
         }
         .upgrade-info { flex: 2; text-align: left; }
-        .upgrade-name { font-weight: bold; font-size: 0.95rem; }
-        .upgrade-desc { font-size: 0.65rem; opacity: 0.8; }
-        .upgrade-cost { font-weight: bold; background: rgba(0,0,0,0.3); border-radius: 30px; padding: 3px 12px; display: inline-block; font-size: 0.75rem; }
+        .upgrade-name { font-weight: bold; font-size: 0.9rem; }
+        .upgrade-desc { font-size: 0.6rem; opacity: 0.8; }
+        .upgrade-cost { font-weight: bold; background: rgba(0,0,0,0.3); border-radius: 30px; padding: 2px 10px; display: inline-block; font-size: 0.7rem; }
         .upgrade-btn {
             border: none;
             font-weight: bold;
@@ -250,14 +265,14 @@
         .upgrade-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
         footer {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             opacity: 0.8;
-            margin-top: 8px;
+            margin-top: 6px;
         }
 
         .floating-number {
             position: fixed;
-            font-size: 1.9rem;
+            font-size: 1.8rem;
             font-weight: 800;
             pointer-events: none;
             z-index: 1050;
@@ -277,10 +292,11 @@
             100% { transform: scale(1) rotate(0deg); }
         }
 
-        @media (max-width: 520px) {
-            .peach { font-size: 150px; }
-            .score-value { font-size: 3rem; }
+        @media (max-width: 550px) {
+            .peach { font-size: 140px; }
+            .score-value { font-size: 2.8rem; }
             .stat-row { font-size: 0.7rem; }
+            .score-title { font-size: 0.95rem; }
         }
     </style>
 </head>
@@ -292,10 +308,9 @@
         <div class="score-title">🍑 РАСЧЁТ ЭТО САМОГО 💩</div>
         <div class="score-value" id="scoreDisplay">0</div>
 
-        <div id="peach" class="peach" role="button">🍑</div>
+        <div id="peach" class="peach" role="button" aria-label="Тапай сюда">🍑</div>
 
-        <!-- Панель статистики без лишних подсказок -->
-        <div class="stats-panel" id="statsPanel">
+        <div class="stats-panel">
             <div class="stats-header" id="toggleStatsBtn">
                 <span>📊 СТАТИСТИКА</span>
                 <span id="toggleIcon">▲</span>
@@ -332,15 +347,15 @@
 <script>
     // ---------- ИГРОВЫЕ ДАННЫЕ ----------
     let score = 0;
-    let clickLevel = 0;          // потужность (база +1 за уровень)
-    let autoCount = 0;           // авто-пукость
-    let doublerLevel = 0;        // потуга плюс: множитель = 1 + doublerLevel (1->x2, 2->x3...)
-    let critLevel = 0;           // разрывность (базовый шанс 15% + 5% за уровень)
-    let luckyLevel = 0;          // хеппи пейпер (добавляет +10% крита)
-    let surpriseLevel = 0;       // неожиданность: бонус = авто-пукость * (1 + surpriseLevel) каждые 10 сек
-    let heavyLevel = 0;          // сила скуфа: +2 за уровень к базе
-    let burgerLevel = 0;         // жирный бургер: множитель всех доходов = 1 + burgerLevel * 0.1
-    let cornLevel = 0;           // кукурузный початок: дополнительный доход при клике = авто-пукость * 0.2 * cornLevel
+    let clickLevel = 0;
+    let autoCount = 0;
+    let doublerLevel = 0;
+    let critLevel = 0;
+    let luckyLevel = 0;
+    let surpriseLevel = 0;
+    let heavyLevel = 0;
+    let burgerLevel = 0;
+    let cornLevel = 0;
     let cosmeticPurchased = false;
 
     // Динамические цены
@@ -504,6 +519,7 @@
         }, 10000);
     }
 
+    // Обработка нажатий (мультитач + мышь)
     function handleTap(touchCount, centerX, centerY) {
         for(let i=0; i<touchCount; i++) {
             let { value, isCrit } = getFinalClickValue();
@@ -569,9 +585,11 @@
         updateUI();
         startAutoIncome();
         startSurpriseInterval();
-        peachDiv.addEventListener('touchstart', onTouch, { passive: false });
-        peachDiv.addEventListener('mousedown', onMouseClick);
-        peachDiv.addEventListener('contextmenu', (e) => e.preventDefault());
+        // Привязка событий
+        const peach = document.getElementById('peach');
+        peach.addEventListener('touchstart', onTouch, { passive: false });
+        peach.addEventListener('mousedown', onMouseClick);
+        peach.addEventListener('contextmenu', (e) => e.preventDefault());
         document.getElementById('openShopBtn').addEventListener('click', openShop);
         document.getElementById('closeShopBtn').addEventListener('click', closeShop);
         window.addEventListener('click', (e) => { if(e.target === shopModal) closeShop(); });
